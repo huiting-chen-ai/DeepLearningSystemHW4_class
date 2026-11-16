@@ -246,6 +246,7 @@ def epoch_general_ptb(data, model, seq_len=40, loss_fn=nn.SoftmaxLoss(), opt=Non
     total_loss = 0.0
     total_correct = 0
     total_examples = 0
+    num_batches = 0
 
     if opt is not None:
         model.train()
@@ -264,11 +265,12 @@ def epoch_general_ptb(data, model, seq_len=40, loss_fn=nn.SoftmaxLoss(), opt=Non
                 opt.clip_grad_norm(clip)
             opt.step()
         token_count = y.shape[0]
-        total_loss += float(loss.numpy().item()) * token_count
+        total_loss += float(loss.numpy().item())
         total_correct += np.sum(pred.numpy().argmax(axis=1) == y.numpy())
         total_examples += token_count
+        num_batches += 1
 
-    avg_loss = total_loss / total_examples
+    avg_loss = total_loss / num_batches
     avg_accuracy = total_correct / total_examples
     return avg_accuracy, avg_loss
     ### END YOUR SOLUTION
