@@ -146,7 +146,8 @@ class SoftmaxLoss(Module):
         batch_size = logits.shape[0]
         lse = ops.logsumexp(logits, axes=(1,))
         z_y = ops.summation(logits * y_one_hot, axes=(1,))
-        return ops.summation(lse - z_y) / batch_size
+        loss = ops.summation(lse - z_y) / batch_size
+        return ops.reshape(loss, ())
         ### END YOUR SOLUTION
 
 
