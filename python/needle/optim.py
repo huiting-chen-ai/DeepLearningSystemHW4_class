@@ -76,7 +76,8 @@ class Adam(Optimizer):
         self.v = {}
 
     def step(self):
-        ### BEGIN YOUR SOLUTIONself.t += 1
+        ### BEGIN YOUR SOLUTION
+        self.t += 1
         for p in self.params:
             grad = p.grad.data+self.weight_decay*p.data
             if p not in self.m:
