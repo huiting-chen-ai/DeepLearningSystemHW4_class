@@ -28,9 +28,14 @@ class Conv(Module):
         self.stride = stride
 
         ### BEGIN YOUR SOLUTION
-        self.weight = Parameter(init.kaiming_uniform(in_channels, out_channels, 
-                                                     (kernel_size, kernel_size, in_channels, out_channels),
-                                                     device=device, dtype=dtype, requires_grad=True))
+        self.weight = Parameter(init.kaiming_uniform(
+            kernel_size * kernel_size * in_channels,
+            kernel_size * kernel_size * out_channels,
+            (kernel_size, kernel_size, in_channels, out_channels),
+            device=device,
+            dtype=dtype,
+            requires_grad=True,
+        ))
         if bias:
             bound = 1/np.sqrt(in_channels*kernel_size**2)
             self.bias = Parameter(init.rand(out_channels, low=-bound, high=bound, device=device, 
